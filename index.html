@@ -150,7 +150,9 @@
     .auth-form .auth-hint {
       text-align: center; font-size: 13px; color: rgba(0,240,255,.55);
       font-family: 'Orbitron', monospace; letter-spacing: 1px;
+      cursor: pointer; transition: all .25s; padding: 6px 0;
     }
+    .auth-form .auth-hint:hover { color: var(--cyan); text-shadow: 0 0 12px var(--cyan); }
 
     /* ========== TODO SECTION ========== */
     .todo-section { display: none; }
@@ -344,7 +346,7 @@
         <input type="text" id="authUser" placeholder="用户名" autocomplete="username">
         <input type="password" id="authPass" placeholder="密码" autocomplete="current-password">
         <button id="authBtn" onclick="handleAuth()">▶ 登录</button>
-        <div class="auth-hint" id="authHint">密码至少 4 个字符</div>
+        <div class="auth-hint" id="authHint" onclick="switchTab('register')">还没有账号？切换注册</div>
       </div>
     </div>
 
@@ -407,7 +409,9 @@
       document.getElementById('tabLogin').className = mode === 'login' ? 'active' : '';
       document.getElementById('tabRegister').className = mode === 'register' ? 'active' : '';
       document.getElementById('authBtn').textContent = mode === 'login' ? '▶ 登录' : '▶ 注册';
-      document.getElementById('authHint').textContent = mode === 'login' ? '还没有账号？切换注册' : '密码至少 4 个字符';
+      const hint = document.getElementById('authHint');
+      hint.textContent = mode === 'login' ? '还没有账号？切换注册' : '已有账号？返回登录';
+      hint.onclick = mode === 'login' ? () => switchTab('register') : () => switchTab('login');
     }
 
     function handleAuth() {
